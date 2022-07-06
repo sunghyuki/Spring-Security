@@ -47,6 +47,9 @@ public class  SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.logout().logoutSuccessUrl("/");
 
+        http.exceptionHandling()
+            .accessDeniedPage("/access-denied");
+
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL );
     }
 }
