@@ -1,5 +1,7 @@
 package com.sunghyuki.demospringsecurity.config;
 
+import com.sunghyuki.demospringsecurity.account.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.expression.SecurityExpressionHandler;
@@ -15,6 +17,9 @@ import org.springframework.security.web.access.expression.DefaultWebSecurityExpr
 @Configuration
 @EnableWebSecurity
 public class  SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    AccountService accountService;
 
     public SecurityExpressionHandler expressionHandler() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
@@ -43,6 +48,10 @@ public class  SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
             .loginPage("/login")
             .permitAll();
+
+        http.rememberMe()
+            .userDetailsService(accountService)
+            .key("remember-me-sample");
 
         http.httpBasic();
 
